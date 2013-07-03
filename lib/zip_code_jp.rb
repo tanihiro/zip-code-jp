@@ -1,8 +1,12 @@
+require 'zip_code_jp/export'
+
 module ZipCodeJp
 
-  def self.export_json
+  module_function
+  def export_json
+    ZipCodeJp::Export.execute
   end
 
-  def self.find
+  def find
   end
 end
