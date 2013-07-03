@@ -1,4 +1,4 @@
-# Zip::Code::Jp
+# ZipCodeJp
 
 A Ruby gem for manipulating JP postal codes.
 
@@ -19,14 +19,14 @@ Or install it yourself as:
 ## Usage
 
     address = ZipCodeJp.find '102-0072'
-    address.prefecture # 東京都
+    address.prefecture      # 東京都
     address.prefecture_kana # トウキョウト
     address.prefecture_code # 13
-    address.city # 千代田区
-    address.city_kana # チヨダク
-    address.town # 飯田橋
-    address.town_name # イイダバシ
-    address.zip_code # 1020072
+    address.city            # 千代田区
+    address.city_kana       # チヨダク
+    address.town            # 飯田橋
+    address.town_name       # イイダバシ
+    address.zip_code        # 1020072
 
 ## Contributing
 
