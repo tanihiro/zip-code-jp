@@ -9,7 +9,6 @@ require 'yaml'
 module ZipCodeJp
   class Export
     ZIP_URL  = 'http://www.post.japanpost.jp/zipcode/dl/kogaki/zip/ken_all.zip'
-    DATA_DIR = File.dirname(__FILE__) + '/../../data'
 
     private
     def self.to_hash(row)
@@ -27,7 +26,7 @@ module ZipCodeJp
     private
     def self.zip_codes
       zip_codes = {}
-      prefecture_codes = YAML.load(File.open("#{DATA_DIR}/prefecture_code.yml"))
+      prefecture_codes = YAML.load(File.open("#{ZipCodeJp::DATA_DIR}/prefecture_code.yml"))
       Zip::Archive.open(open(ZIP_URL).path) do |archives|
         archives.each do |a|
           CSV.parse(a.read) do |row|
@@ -44,7 +43,7 @@ module ZipCodeJp
 
     def self.execute
       zip_codes().each do |prefix, value|
-        file_path = "#{DATA_DIR}/zip_code/#{prefix}.json"
+        file_path = "#{ZipCodeJp::DATA_DIR}/zip_code/#{prefix}.json"
         File.open(file_path, 'wb') do |file|
           file.write JSON.generate(value)
         end
