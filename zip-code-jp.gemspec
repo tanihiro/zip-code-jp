@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'zip/code/jp/version'
+require 'zip_code_jp/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "zip-code-jp"
-  spec.version       = Zip::Code::Jp::VERSION
+  spec.version       = ZipCodeJp::VERSION
   spec.authors       = ["itani-hiroki"]
   spec.email         = ["itanihiroki@gmail.com"]
   spec.description   = %q{A Ruby gem for manipulating JP postal codes.}
