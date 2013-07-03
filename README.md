@@ -6,7 +6,7 @@ A Ruby gem for manipulating JP postal codes.
 
 Add this line to your application's Gemfile:
 
-    gem 'zip-code-jp'
+    gem 'zip_code_jp'
 
 And then execute:
 
@@ -14,7 +14,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install zip-code-jp
+    $ gem install zip_code_jp
 
 ## Usage
 

@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'zip_code_jp/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "zip-code-jp"
+  spec.name          = "zip_code_jp"
   spec.version       = ZipCodeJp::VERSION
   spec.authors       = ["itani-hiroki"]
   spec.email         = ["itanihiroki@gmail.com"]
