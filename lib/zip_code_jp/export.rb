@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 require 'zipruby'
+require 'pry'
 require 'json'
 require 'open-uri'
 require 'csv'
@@ -8,7 +9,7 @@ require 'yaml'
 
 module ZipCodeJp
   class Export
-    ZIP_URL  = 'http://www.post.japanpost.jp/zipcode/dl/kogaki/zip/ken_all.zip'
+    ZIP_URL  = 'http://zipcloud.ibsnet.co.jp/zipcodedata/download?di=1372407257348'
 
     private
     def self.to_hash(row)
@@ -18,8 +19,8 @@ module ZipCodeJp
         :prefecture_kana => NKF.nkf('-S -w', row[3]),
         :city            => NKF.nkf('-S -w', row[7]),
         :city_kana       => NKF.nkf('-S -w', row[4]),
-        :town            => NKF.nkf('-S -w', row[8]).gsub(/(以下に掲載がない場合|（.*）)/, ''),
-        :town_kana       => NKF.nkf('-S -w', row[5]).gsub(/(イカニケイサイガナイバアイ|\(.*\))/, '')
+        :town            => NKF.nkf('-S -w', row[8]),
+        :town_kana       => NKF.nkf('-S -w', row[5])
       }
     end
 
@@ -32,9 +33,20 @@ module ZipCodeJp
           CSV.parse(a.read) do |row|
             h = to_hash(row)
             h[:prefecture_code] = prefecture_codes.invert[h[:prefecture]]
-            prefix = h[:zip_code].slice(0,3)
-            zip_codes[prefix] = {} unless zip_codes[prefix]
-            zip_codes[prefix] = zip_codes[prefix].merge({h[:zip_code].slice(3,4) => h})
+            first_prefix  = h[:zip_code].slice(0,3)
+            second_prefix = h[:zip_code].slice(3,4)
+            zip_codes[first_prefix] = {} unless zip_codes[first_prefix]
+
+            if zip_codes[first_prefix][second_prefix] && !zip_codes[first_prefix][second_prefix].instance_of?(Array)
+              zip_codes[first_prefix][second_prefix] = [zip_codes[first_prefix][second_prefix]]
+            end
+
+            if zip_codes[first_prefix][second_prefix].instance_of?(Array)
+              zip_codes[first_prefix][second_prefix].push h
+            else
+              zip_codes[first_prefix] = zip_codes[first_prefix].merge({second_prefix => h})
+            end
+
           end
         end
       end

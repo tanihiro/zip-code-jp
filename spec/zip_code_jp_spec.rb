@@ -15,6 +15,20 @@ describe ZipCodeJp do
       expect(address.town_kana).to eq('タカバン')
     end
 
+    it 'multi address zip code.' do
+      addresses = ZipCodeJp.find '0790177'
+      expect(addresses.class).to eq(Array)
+      addresses.each do |address|
+        expect(address.prefecture).to eq('北海道')
+        expect(address.prefecture_kana).to eq('ホッカイドウ')
+        expect(address.city).to eq('美唄市')
+        expect(address.city_kana).to eq('ビバイシ')
+        expect(address.town).to match(/上美唄町(協和|南)/)
+        expect(address.town_kana).to match(/カミビバイチョウ(キョウワ|ミナミ)/)
+        expect(address.prefecture_code).to eq(1)
+      end
+    end
+
     it 'zip code does not exists.' do
       address = ZipCodeJp.find '000-0000'
       expect(address).to eq(false)
