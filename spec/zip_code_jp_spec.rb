@@ -5,14 +5,14 @@ describe ZipCodeJp do
 
   describe 'If you want to search from the zip code.' do
     it 'zip code exists.' do
-      address = ZipCodeJp.find '152-0004'
+      address = ZipCodeJp.find '102-0072'
       expect(address.prefecture).to eq('東京都')
       expect(address.prefecture_kana).to eq('トウキョウト')
       expect(address.prefecture_code).to eq(13)
-      expect(address.city).to eq('目黒区')
-      expect(address.city_kana).to eq('メグロク')
-      expect(address.town).to eq('鷹番')
-      expect(address.town_kana).to eq('タカバン')
+      expect(address.city).to eq('千代田区')
+      expect(address.city_kana).to eq('チヨダク')
+      expect(address.town).to eq('飯田橋')
+      expect(address.town_kana).to eq('イイダバシ')
     end
 
     it 'multi address zip code.' do
