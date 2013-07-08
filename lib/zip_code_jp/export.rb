@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 require 'zipruby'
-require 'pry'
 require 'json'
 require 'open-uri'
 require 'csv'
