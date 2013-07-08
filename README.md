@@ -28,6 +28,18 @@ Or install it yourself as:
     address.town_name       # イイダバシ
     address.zip_code        # 1020072
 
+If more than one address corresponds
+
+    addresses = ZipCodeJp.find '0790177'
+    addresses.class # Array
+    addresses.each do |address|
+      address.zip_code # 0790177
+    end
+
+Update the JSON data of postal code
+
+    ZipCodeJp.export_json
+
 ## Contributing
 
 1. Fork it
