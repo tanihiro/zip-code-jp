@@ -25,7 +25,7 @@ Or install it yourself as:
     address.city            # 千代田区
     address.city_kana       # チヨダク
     address.town            # 飯田橋
-    address.town_name       # イイダバシ
+    address.town_kana       # イイダバシ
     address.zip_code        # 1020072
 
 If more than one address corresponds
