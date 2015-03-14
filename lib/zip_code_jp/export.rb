@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-require 'zipruby'
+require 'zip'
 require 'json'
 require 'open-uri'
 require 'csv'
@@ -27,9 +27,9 @@ module ZipCodeJp
     def self.zip_codes
       zip_codes = {}
       prefecture_codes = YAML.load(File.open("#{ZipCodeJp::DATA_DIR}/prefecture_code.yml"))
-      Zip::Archive.open(open(ZIP_URL).path) do |archives|
+      Zip::File.open(open(ZIP_URL).path) do |archives|
         archives.each do |a|
-          CSV.parse(a.read) do |row|
+          CSV.parse(a.get_input_stream.read) do |row|
             h = to_hash(row)
             h[:prefecture_code] = prefecture_codes.invert[h[:prefecture]]
             first_prefix  = h[:zip_code].slice(0,3)
