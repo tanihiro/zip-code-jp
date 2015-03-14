@@ -2,7 +2,6 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
 describe ZipCodeJp do
-
   describe 'If you want to search from the zip code.' do
     it 'zip code exists.' do
       address = ZipCodeJp.find '102-0072'
@@ -32,6 +31,12 @@ describe ZipCodeJp do
     it 'zip code does not exists.' do
       address = ZipCodeJp.find '000-0000'
       expect(address).to eq(false)
+    end
+  end
+
+  describe 'ZipCodeJp.export_json' do
+    it 'does NOT raise any errors' do
+      expect { ZipCodeJp.export_json }.not_to raise_error
     end
   end
 end
