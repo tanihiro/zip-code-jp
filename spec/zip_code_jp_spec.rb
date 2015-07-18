@@ -15,15 +15,15 @@ describe ZipCodeJp do
     end
 
     it 'multi address zip code.' do
-      addresses = ZipCodeJp.find '0790177'
+      addresses = ZipCodeJp.find '0791266'
       expect(addresses.class).to eq(Array)
       addresses.each do |address|
         expect(address.prefecture).to eq('北海道')
         expect(address.prefecture_kana).to eq('ホッカイドウ')
-        expect(address.city).to eq('美唄市')
-        expect(address.city_kana).to eq('ビバイシ')
-        expect(address.town).to match(/上美唄町(協和|南)/)
-        expect(address.town_kana).to match(/カミビバイチョウ(キョウワ|ミナミ)/)
+        expect(address.city).to eq('赤平市')
+        expect(address.city_kana).to eq('アカビラシ')
+        expect(address.town).to match(/茂尻(栄町)?/)
+        expect(address.town_kana).to match(/モジリ(サカエマチ)?/)
         expect(address.prefecture_code).to eq(1)
       end
     end

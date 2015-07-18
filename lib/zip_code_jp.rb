@@ -21,7 +21,7 @@ module ZipCodeJp
       if address_data.instance_of?(Array)
         results = []
         address_data.each do |a|
-          results.push ZipCodeJp::Address.new(a) 
+          results.push ZipCodeJp::Address.new(a)
         end
         return results
       end
