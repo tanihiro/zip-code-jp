@@ -8,7 +8,7 @@ require 'yaml'
 
 module ZipCodeJp
   class Export
-    ZIP_URL  = 'http://zipcloud.ibsnet.co.jp/zipcodedata/download?di=1372407257348'
+    ZIP_URL  = 'http://zipcloud.ibsnet.co.jp/zipcodedata/download?di=1435651825552'
 
     private
     def self.to_hash(row)
@@ -27,6 +27,7 @@ module ZipCodeJp
     def self.zip_codes
       zip_codes = {}
       prefecture_codes = YAML.load(File.open("#{ZipCodeJp::DATA_DIR}/prefecture_code.yml"))
+
       Zip::File.open(open(ZIP_URL).path) do |archives|
         archives.each do |a|
           CSV.parse(a.get_input_stream.read) do |row|
