@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'zip'
 require 'json'
+require 'nokogiri'
 require 'open-uri'
 require 'csv'
 require 'nkf'
@@ -8,7 +9,7 @@ require 'yaml'
 
 module ZipCodeJp
   class Export
-    ZIP_URL  = 'http://zipcloud.ibsnet.co.jp/zipcodedata/download?di=1372407257348'
+    ZIP_URL_DOMAIN  = 'http://zipcloud.ibsnet.co.jp'
 
     private
     def self.to_hash(row)
@@ -24,10 +25,18 @@ module ZipCodeJp
     end
 
     private
+    def self.zip_url
+      html = Nokogiri::HTML(open(ZIP_URL_DOMAIN))
+      url = html.css('[href^="/zipcodedata/download"]').last.attributes['href']
+
+      "#{ZIP_URL_DOMAIN}#{url}"
+    end
+
+    private
     def self.zip_codes
       zip_codes = {}
       prefecture_codes = YAML.load(File.open("#{ZipCodeJp::DATA_DIR}/prefecture_code.yml"))
-      Zip::File.open(open(ZIP_URL).path) do |archives|
+      Zip::File.open(open(zip_url).path) do |archives|
         archives.each do |a|
           CSV.parse(a.get_input_stream.read) do |row|
             h = to_hash(row)
