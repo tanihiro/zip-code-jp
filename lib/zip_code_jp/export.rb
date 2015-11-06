@@ -26,7 +26,7 @@ module ZipCodeJp
 
     private
     def self.zip_url
-      html =  Oga.parse_html(open(ZIP_URL_DOMAIN))
+      html = Oga.parse_html(open(ZIP_URL_DOMAIN))
       url = html.css('[href^="/zipcodedata/download"]').last.get('href')
 
       "#{ZIP_URL_DOMAIN}#{url}"
