@@ -24,6 +24,17 @@ module ZipCodeJp
       }
     end
 
+    def self.to_hash_office(row)
+	 {
+      :zip_code        => row[7],
+      :prefecture      => NKF.nkf('-S -w', row[3]),
+      :city            => NKF.nkf('-S -w', row[4]),
+      :town            => NKF.nkf('-S -w', row[9]),
+    }
+  end
+
+
+
     private
     def self.zip_url
       html = Nokogiri::HTML(open(ZIP_URL_DOMAIN))
@@ -58,6 +69,30 @@ module ZipCodeJp
           end
         end
       end
+
+	  Zip::File.open(open('http://www.post.japanpost.jp/zipcode/dl/jigyosyo/zip/jigyosyo.zip').path) do |archives|
+        archives.each do |a|
+          CSV.parse(a.get_input_stream.read) do |row|
+            h = to_hash(row)
+            h[:prefecture_code] = prefecture_codes[h[:prefecture]]
+            first_prefix  = h[:zip_code].slice(0,3)
+            second_prefix = h[:zip_code].slice(3,4)
+            zip_codes[first_prefix] = {} unless zip_codes[first_prefix]
+
+            if zip_codes[first_prefix][second_prefix] && !zip_codes[first_prefix][second_prefix].instance_of?(Array)
+              zip_codes[first_prefix][second_prefix] = [zip_codes[first_prefix][second_prefix]]
+            end
+
+            if zip_codes[first_prefix][second_prefix].instance_of?(Array)
+              zip_codes[first_prefix][second_prefix].push h
+            else
+              zip_codes[first_prefix] = zip_codes[first_prefix].merge({second_prefix => h})
+            end
+
+          end
+        end
+      end
+
       zip_codes
     end
 
