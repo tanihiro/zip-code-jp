@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'zip'
 require 'json'
-require 'nokogiri'
+require 'oga'
 require 'open-uri'
 require 'csv'
 require 'nkf'
@@ -26,8 +26,8 @@ module ZipCodeJp
 
     private
     def self.zip_url
-      html = Nokogiri::HTML(open(ZIP_URL_DOMAIN))
-      url = html.css('[href^="/zipcodedata/download"]').last.attributes['href']
+      html = Oga.parse_html(open(ZIP_URL_DOMAIN))
+      url = html.css('[href^="/zipcodedata/download"]').last.get('href')
 
       "#{ZIP_URL_DOMAIN}#{url}"
     end
