@@ -22,8 +22,8 @@ describe ZipCodeJp do
         expect(address.prefecture_kana).to eq('ホッカイドウ')
         expect(address.city).to eq('美唄市')
         expect(address.city_kana).to eq('ビバイシ')
-        expect(address.town).to match(/上美唄町(協和|南)/)
-        expect(address.town_kana).to match(/カミビバイチョウ(キョウワ|ミナミ)/)
+        expect(address.town).to match(/上美唄町(協和|南)?/)
+        expect(address.town_kana).to match(/カミビバイチョウ(キョウワ|ミナミ)?/)
         expect(address.prefecture_code).to eq(1)
       end
     end
